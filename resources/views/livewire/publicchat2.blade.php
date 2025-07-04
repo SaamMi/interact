@@ -1,5 +1,7 @@
 
 
+<x-app-layout>
+
 
 
 
@@ -16,32 +18,41 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-blue dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
                 
-              <div class="flex items-center h-screen">
+              <div class="flex items-center">
                 <div class="w-3/5"> content... </div>
-                <div class="w-1/5 h-screen">
+                <div class="w-1/5">
                 
-             
-             
-                <div class="overflow-y-auto">
+                <div>
             <ul class="ml-12 space-y-4">
-                messages
-            
-              {{$this->msg}}
-                
+                @if (isset($msg))
+                @foreach ($this->msg as $message)
+                    <li>
+                        <span class="block font-bold dark:text-green-700">{{ $message }}</span>
+                        <span
+                            class="block dark:text-white"
+                            x-bind:class='{ "text-5xl": hasOneEmoji("{{ $message->message }}") }'
+                        >
+                            {!! $message->message !!}
+                        </span>
+                    </li>
+                @endforeach
+                @endif
             </ul>
         </div>
+                               
                              
 
                   
                                    
-               
-<div x-data='{open:false}'>
-   
+                  <x-dropdown align="right" class="h-screen" >
+                          
+                            <x-slot name="content" >
+
                             
                                 <div class="w-screen items-start" >
                                 <form
                                 class="mt-4 mb-8 ml-12 space-x-2"
-                wire:submit.prevent="sendMessage"
+                wire:submit.prevent="cookieValue"
             >
             <label for="message">
                     <input
@@ -55,22 +66,26 @@
                     >
                 </label>
 
-                                <button   x-on:click='open=open'  class="py-2 px-3 text-white bg-blue-500 rounded-lg dark:text-white dark:bg-blue-900 hover:bg-blue-600" type="submit">
+                                <button     class="py-2 px-3 text-white bg-blue-500 rounded-lg dark:text-white dark:bg-blue-900 hover:bg-blue-600" type="submit">
                                    Send Message
                                 </button>
                             </form>       
                                 
 
-                                
-    </div>
-                             
+                                </div>
+                            </x-slot>   
                             
                             
-                        
+                            <x-slot name="trigger" class=" items-end justify">
 
-                            
+                            <div class="h-screen">
 
-                              
+                                <button class="size-16">
+                                   <img src="{{ asset('img/chat-icon.png') }}" />
+                                </button>
+                            </div>   
+                            </x-slot>   
+                  </x-dropdown>
                         
                          
             
@@ -80,8 +95,7 @@
             </div>
         </div>
     </div>
-</div>
-
+</x-app-layout>
 
 
 
